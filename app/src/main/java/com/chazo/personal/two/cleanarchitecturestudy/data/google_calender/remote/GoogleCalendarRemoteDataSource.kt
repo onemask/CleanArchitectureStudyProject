@@ -1,6 +1,6 @@
-package com.chazo.personal.two.cleanarchitecturestudy.data.google_calender
+package com.chazo.personal.two.cleanarchitecturestudy.data.google_calender.remote
 
-import android.util.Log
+import com.chazo.personal.two.cleanarchitecturestudy.data.google_calender.GoogleCalendarDataSource
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
@@ -9,8 +9,9 @@ import com.google.api.services.calendar.model.CalendarList
 import com.google.api.services.calendar.model.Event
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class GoogleCalendarRemoteDataSource(
+class GoogleCalendarRemoteDataSource @Inject constructor(
     googleAccountCredential: GoogleAccountCredential,
     transport: HttpTransport,
     jsonFactory: JsonFactory

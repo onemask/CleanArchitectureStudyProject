@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion 28
@@ -24,22 +26,30 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
 
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation('com.google.api-client:google-api-client-android:1.23.0') {
+    implementation "androidx.appcompat:appcompat:$versions.appCompat"
+    implementation "androidx.legacy:legacy-support-v4:$versions.support"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayout"
+
+    implementation "com.google.android.gms:play-services-auth:$versions.playServicesAuth"
+    implementation("com.google.api-client:google-api-client-android:$versions.googleApiClientAndroid") {
         exclude group: 'org.apache.httpcomponents'
     }
-    implementation('com.google.apis:google-api-services-calendar:v3-rev364-1.25.0') {
+    implementation("com.google.apis:google-api-services-calendar:$versions.googleApiServiceCalendar") {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    implementation 'pub.devrel:easypermissions:2.0.0'
+    implementation "pub.devrel:easypermissions:$versions.easyPermissions"
 
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.5'
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+
+    implementation "com.google.dagger:dagger:$versions.dagger"
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+    implementation "com.google.dagger:dagger-android:$versions.dagger"
+    implementation "com.google.dagger:dagger-android-support:$versions.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CleanArchitectureStudy</string>
+
+    <string name="calendarId_default">NO_ID</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="button_sign_in">계정 선택하기</string>
 </resources>

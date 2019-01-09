@@ -6,9 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
-import android.widget.Toast
 import com.chazo.personal.two.cleanarchitecturestudy.constant.PREF_GOOGLE_ACCOUNT_NAME
 import com.chazo.personal.two.cleanarchitecturestudy.constant.RC_ACCOUNT_PICKER
 import com.chazo.personal.two.cleanarchitecturestudy.constant.RC_AUTH_PERMISSION
@@ -40,43 +38,40 @@ class MainActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_main)
         compositeDisposable = CompositeDisposable()
 
-        Toast.makeText(this,"test",Toast.LENGTH_SHORT).show()
-
         button_sign_in.setOnClickListener {
-            getCalendarList()
-        }
-    }
-
-    private fun getCalendarList() {
-        if (isAccountName()) {
-            googleCalendarRepository.getCalendarList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .map { it.items }
-                .subscribe({
-                    it.forEach { item ->
-                        val button = Button(this)
-                        button.text = item.summary
-                        button.setOnClickListener {
-                            getEvents(item.id)
-                        }
-                        layout_kind_of_calendar.addView(button)
-                    }
-                }, {
-                    when (it) {
-                        is UserRecoverableAuthIOException -> startActivityForResult(it.intent, RC_AUTH_PERMISSION)
-                        else -> it.printStackTrace()
-                    }
-                }).apply { compositeDisposable.add(this) }
+            isAccountName()
         }
     }
 
     private fun isAccountName(): Boolean {
         googleAccountCredential.selectedAccountName?.let {
+            getCalendarList()
             return true
-        }.let {
+        }.let{
             selectAccount()
             return false
         }
+    }
+
+    private fun getCalendarList() {
+        googleCalendarRepository.getCalendarList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { it.items }
+            .subscribe({
+                it.forEach { item ->
+                    val button = Button(this)
+                    button.text = item.summary
+                    button.setOnClickListener {
+                        getEvents(item.id)
+                    }
+                    layout_kind_of_calendar.addView(button)
+                }
+            }, {
+                when (it) {
+                    is UserRecoverableAuthIOException -> startActivityForResult(it.intent, RC_AUTH_PERMISSION)
+                    else -> it.printStackTrace()
+                }
+            }).apply { compositeDisposable.add(this) }
     }
 
     @AfterPermissionGranted(RP_GET_ACCOUNTS)
@@ -98,16 +93,14 @@ class MainActivity : DaggerAppCompatActivity() {
     }
 
     private fun getEvents(calendarId: String) {
-        if (isAccountName()) {
-            googleCalendarRepository.getEvents(calendarId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    text_calendar_data.text = it.fold("") { acc, event ->
-                        acc + "date=${event.start.date} summary=${event.summary}\n"
-                    }
-                }, { it.printStackTrace() })
-                .apply { compositeDisposable.add(this) }
-        }
+        googleCalendarRepository.getEvents(calendarId)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                text_calendar_data.text = it.fold("") { acc, event ->
+                    acc + "date=${event.start.date} summary=${event.summary}\n"
+                }
+            }, { it.printStackTrace() })
+            .apply { compositeDisposable.add(this) }
     }
 
     private fun requestPermission(permissions: Array<String>) =
@@ -132,17 +125,14 @@ class MainActivity : DaggerAppCompatActivity() {
                         getCalendarList()
                     }
                 }
-                RC_AUTH_PERMISSION -> getCalendarList()
+                RC_AUTH_PERMISSION -> isAccountName()
             }
         }
     }
 
-
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-
     }
 
     override fun onDestroy() {

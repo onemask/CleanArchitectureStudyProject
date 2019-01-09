@@ -73,7 +73,6 @@ class AuthFragment : DaggerFragment() {
         AuthFragmentDirections.actionDestAuthToDestCalendarSelect().apply {
             findNavController().navigate(this)
         }
-//        Navigation.createNavigateOnClickListener(R.id.action_dest_auth_to_dest_calendar_select)
     }
 
     private fun requestPermission(permissions: Array<String>) =

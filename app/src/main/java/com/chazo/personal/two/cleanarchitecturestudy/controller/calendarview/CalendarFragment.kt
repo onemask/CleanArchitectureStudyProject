@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.chazo.personal.two.cleanarchitecturestudy.R
 import com.chazo.personal.two.cleanarchitecturestudy.data.google_calender.GoogleCalendarRepository
 import com.google.api.services.calendar.model.Event
@@ -50,9 +49,7 @@ class CalendarFragment : DaggerFragment() {
 
     private fun setupCalendarData(calendarId: String) {
         getEvents(calendarId).subscribe({
-            text_calendar_data.text = it.fold("") { acc, event ->
-                acc + "date=${event.start.date} summary=${event.summary}\n"
-            }
+            text_calendar_data.text = createEventsText(it)
         }, {
             it.printStackTrace()
         }).apply { compositeDisposable.add(this) }
@@ -62,6 +59,14 @@ class CalendarFragment : DaggerFragment() {
         googleCalendarRepository.getEvents(calendarId)
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { progress_loading.visibility = View.GONE }
+
+    private fun createEventsText(events: List<Event>): String {
+        val size = events.size
+        return events.foldIndexed("") { index, acc, event ->
+            acc + "date=${event.start.date} summary=${event.summary}" + if(index == size-1) "" else "\n"
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

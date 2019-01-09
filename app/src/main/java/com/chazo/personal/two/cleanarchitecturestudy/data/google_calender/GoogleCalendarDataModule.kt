@@ -39,7 +39,6 @@ abstract class GoogleCalendarDataModule {
         }
     }
 
-
     @Singleton
     @Binds
     abstract fun provideGoogleCalendarRepository(googleCalendarRepository: GoogleCalendarRepository): GoogleCalendarDataSource

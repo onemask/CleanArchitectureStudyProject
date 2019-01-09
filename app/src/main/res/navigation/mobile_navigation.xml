@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/mobile_navigation"
+	app:startDestination="@id/dest_auth">
+
+	<fragment
+		android:id="@+id/dest_auth"
+		android:name="com.chazo.personal.two.cleanarchitecturestudy.controller.auth.AuthFragment"
+		tools:layout="@layout/fragment_auth">
+		<action
+			android:id="@+id/action_dest_auth_to_dest_calendar_select"
+			app:destination="@id/dest_calendar_select" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/dest_calendar_select"
+		android:name="com.chazo.personal.two.cleanarchitecturestudy.controller.calendarview.CalendarSelectFragment"
+		tools:layout="@layout/fragment_calendar_select">
+
+		<action
+			android:id="@+id/action_dest_calendar_select_to_dest_calendar"
+			app:destination="@id/dest_calendar" />
+	</fragment>
+
+	<fragment
+		android:id="@+id/dest_calendar"
+		android:name="com.chazo.personal.two.cleanarchitecturestudy.controller.calendarview.CalendarFragment"
+		tools:layout="@layout/fragment_calendar">
+		<argument
+			android:name="calendarId"
+			app:argType="string"
+			android:defaultValue="@string/calendarId_default"/>
+
+	</fragment>
+
+</navigation>

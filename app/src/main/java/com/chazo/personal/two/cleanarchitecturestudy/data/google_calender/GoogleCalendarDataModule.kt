@@ -28,18 +28,26 @@ abstract class GoogleCalendarDataModule {
                 .usingOAuth2(context, Arrays.asList(CalendarScopes.CALENDAR))
                 .setBackOff(ExponentialBackOff())
         }
-
         @JvmStatic
         @Singleton
         @Provides
-        fun provideGoogleCalendarRemoteDataSource(googleAccountCredential: GoogleAccountCredential): GoogleCalendarRemoteDataSource {
-            val transport: HttpTransport = AndroidHttp.newCompatibleTransport()
-            val jsonFactory: JsonFactory = JacksonFactory.getDefaultInstance()
-            return GoogleCalendarRemoteDataSource(googleAccountCredential, transport, jsonFactory)
+        fun providetTansport() : HttpTransport{
+            return AndroidHttp.newCompatibleTransport()
+        }
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun providetJacksonFactory() : JacksonFactory{
+            return JacksonFactory.getDefaultInstance()
+        }
+        @JvmStatic
+        @Singleton
+        @Provides
+        fun provideGoogleCalendarRemoteDataSource(googleAccountCredential: GoogleAccountCredential,transport: HttpTransport,jacksonFactory: JacksonFactory): GoogleCalendarRemoteDataSource {
+            return GoogleCalendarRemoteDataSource(googleAccountCredential, transport, jacksonFactory)
         }
     }
-
-
+    
     @Singleton
     @Binds
     abstract fun provideGoogleCalendarRepository(googleCalendarRepository: GoogleCalendarRepository): GoogleCalendarDataSource

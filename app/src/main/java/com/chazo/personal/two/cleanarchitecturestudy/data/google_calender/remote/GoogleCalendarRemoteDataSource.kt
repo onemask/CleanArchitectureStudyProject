@@ -19,7 +19,6 @@ class GoogleCalendarRemoteDataSource @Inject constructor(
     private val calendar: Calendar = Calendar.Builder(transport, jsonFactory, googleAccountCredential)
         .setApplicationName("Google Calendar Api MVC")
         .build()
-
     override fun getCalendarList(): Single<CalendarList> {
         return Single.fromCallable { calendar.CalendarList().list().execute() }
             .subscribeOn(Schedulers.io())

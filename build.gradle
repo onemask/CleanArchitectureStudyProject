@@ -4,31 +4,39 @@
 buildscript {
     ext {
         versions = [
-                kotlin                  : '1.3.11',
+                kotlin             : '1.2.71',
 
-                //androidx
-                appCompat               : '1.1.0-alpha01',
-                support                 : '1.0.0',
-                constraintlayout        : '2.0.0-alpha3',
-                recyclerview            : '1.0.0',
+                //android
+                appcompat          : '28.0.0',
+                constraintlayout   : '1.1.3',
+                support            : '28.0.0',
 
-                //google
-                material                : '1.1.0-alpha02',
-                playServicesAuth        : '16.0.1',
-                googleApiClientAndroid  : '1.23.0',
-                googleApiServiceCalendar: 'v3-rev364-1.25.0',
+                //retrofit ,gson, rxjava
+                retrofit           : '2.4.0',
+                gson               : '2.4.0',
+                rxjava2            : '2.4.0',
 
-                //dagger
-                dagger                  : '2.16',
+                //google play
+                auth               : '16.0.1',
+                google_api         : '1.23.0',
+                google_calendar_api: 'v3-rev364-1.25.0',
 
-                easyPermissions         : '2.0.0',
+                //easy permission
+                easypermissions    : '2.0.0',
 
-                //rxjava
-                rxandroid               : '2.1.0',
-                rxjava                  : '2.2.5',
+                //okhttp3
+                okhttp             : '3.10.0',
 
-                //arch
-                navigation               : '1.0.0-alpha09'
+                //Dagger2
+                dagger             : '2.17',
+
+                //navigation
+                navigation         : '1.0.0-alpha09',
+
+                //rxandroid
+                rxandroid          : '2.1.0',
+                rxjava             : '2.2.5',
+                rxbinding          : '2.1.1',
         ]
     }
 
@@ -44,16 +52,12 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
 allprojects {
     repositories {
         google()
         jcenter()
     }
 }
-
-
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

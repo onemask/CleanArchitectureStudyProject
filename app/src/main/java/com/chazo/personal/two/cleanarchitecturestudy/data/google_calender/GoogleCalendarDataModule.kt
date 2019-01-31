@@ -28,7 +28,6 @@ abstract class GoogleCalendarDataModule {
         }
 
         @JvmStatic
-        @Singleton
         @Provides
         fun provideHttpTransport(): HttpTransport {
             return AndroidHttp.newCompatibleTransport()
